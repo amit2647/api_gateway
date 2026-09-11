@@ -1,0 +1,30 @@
+_format_version: "3.0"
+
+services:
+
+  - name: lead-service
+    url: http://lead-service:4001/leads
+
+    routes:
+      - name: lead-api
+        paths:
+          - /api/leads
+        strip_path: true
+
+  - name: customer-service
+    url: http://customer-service:4002/customers
+
+    routes:
+      - name: customer-api
+        paths:
+          - /api/customers
+        strip_path: true
+
+  - name: service-service
+    url: http://service-service:4003/services
+
+    routes:
+      - name: service-api
+        paths:
+          - /api/services
+        strip_path: true
