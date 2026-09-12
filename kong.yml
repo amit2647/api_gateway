@@ -1,7 +1,6 @@
 _format_version: "3.0"
 
 services:
-
   - name: lead-service
     url: http://lead-service:4001/leads
 
@@ -27,4 +26,13 @@ services:
       - name: service-api
         paths:
           - /api/services
+        strip_path: true
+
+  - name: identity-service
+    url: http://identity-service:4004/auth
+
+    routes:
+      - name: identity-api
+        paths:
+          - /api/auth
         strip_path: true
