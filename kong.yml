@@ -36,11 +36,21 @@ services:
         paths:
           - /api/auth
         strip_path: true
-  
+
   - name: dashboard-service
     url: http://dashboard-service:4005/dashboard
+
     routes:
       - name: dashboard-api
         paths:
           - /api/dashboard
+        strip_path: true
+
+  - name: email-service
+    url: http://email-service:4006/emails
+
+    routes:
+      - name: email-api
+        paths:
+          - /api/emails
         strip_path: true
