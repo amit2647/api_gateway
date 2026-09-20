@@ -54,3 +54,41 @@ services:
         paths:
           - /api/emails
         strip_path: true
+  # identity-service also serves user, role and organization administration.
+  # Each needs its own service entry because the upstream url carries the path
+  # prefix that strip_path removes, exactly as with the services above.
+  - name: identity-users
+    url: http://identity-service:4004/users
+
+    routes:
+      - name: identity-users-api
+        paths:
+          - /api/users
+        strip_path: true
+
+  - name: identity-roles
+    url: http://identity-service:4004/roles
+
+    routes:
+      - name: identity-roles-api
+        paths:
+          - /api/roles
+        strip_path: true
+
+  - name: identity-permissions
+    url: http://identity-service:4004/permissions
+
+    routes:
+      - name: identity-permissions-api
+        paths:
+          - /api/permissions
+        strip_path: true
+
+  - name: identity-organizations
+    url: http://identity-service:4004/organizations
+
+    routes:
+      - name: identity-organizations-api
+        paths:
+          - /api/organizations
+        strip_path: true
