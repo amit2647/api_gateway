@@ -92,3 +92,12 @@ services:
         paths:
           - /api/organizations
         strip_path: true
+
+  - name: identity-access-grants
+    url: http://identity-service:4004/access-grants
+
+    routes:
+      - name: identity-access-grants-api
+        paths:
+          - /api/access-grants
+        strip_path: true
