@@ -101,3 +101,23 @@ services:
         paths:
           - /api/access-grants
         strip_path: true
+
+  # assistant-service hosts the AI assistant and the MCP server. The MCP route
+  # is published so external MCP clients can reach it with the same JWT.
+  - name: assistant-service
+    url: http://assistant-service:4007/assistant
+
+    routes:
+      - name: assistant-api
+        paths:
+          - /api/assistant
+        strip_path: true
+
+  - name: assistant-mcp
+    url: http://assistant-service:4007/mcp
+
+    routes:
+      - name: assistant-mcp-api
+        paths:
+          - /api/mcp
+        strip_path: true
