@@ -1,0 +1,20 @@
+name: Validate config
+
+# A kong.yml that does not parse takes the whole gateway down, so every change
+# is checked with the same Kong version docker-compose.yml runs.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: kong config parse
+        run: >-
+          docker run --rm -e KONG_DATABASE=off -v "$PWD":/kong:ro kong:3.9
+          kong config parse /kong/kong.yml
