@@ -102,6 +102,17 @@ services:
           - /api/access-grants
         strip_path: true
 
+  # The signed-in person's own record. Separate from /api/users, which manages
+  # other people and is permission-gated; this acts on the caller only.
+  - name: identity-profile
+    url: http://identity-service:4004/profile
+
+    routes:
+      - name: identity-profile-api
+        paths:
+          - /api/profile
+        strip_path: true
+
   # assistant-service hosts the AI assistant and the MCP server. The MCP route
   # is published so external MCP clients can reach it with the same JWT.
   - name: assistant-service
