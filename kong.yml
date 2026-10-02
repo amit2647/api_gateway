@@ -132,3 +132,56 @@ services:
         paths:
           - /api/mcp
         strip_path: true
+
+  # ---------------------------------------------------------------------------
+  # Profession-bundle capability services. Each answers only for organizations
+  # whose installed bundle requires it. Ports pinned here as for the core
+  # services (*_SERVICE_PORT in .env must match).
+  # ---------------------------------------------------------------------------
+
+  - name: bundle-service
+    url: http://bundle-service:4008/bundles
+
+    routes:
+      - name: bundle-api
+        paths:
+          - /api/bundles
+        strip_path: true
+
+  - name: engagement-service
+    url: http://engagement-service:4009/engagements
+
+    routes:
+      - name: engagement-api
+        paths:
+          - /api/engagements
+        strip_path: true
+
+  - name: obligation-service
+    url: http://obligation-service:4010/obligations
+
+    routes:
+      - name: obligation-api
+        paths:
+          - /api/obligations
+        strip_path: true
+
+  - name: document-service
+    url: http://document-service:4011/documents
+
+    routes:
+      - name: document-api
+        paths:
+          - /api/documents
+        strip_path: true
+
+  # Uploads go through here; a request-size limit matching vault-service's
+  # upload cap is added with the upload route (milestone M6).
+  - name: vault-service
+    url: http://vault-service:4012/vault
+
+    routes:
+      - name: vault-api
+        paths:
+          - /api/vault
+        strip_path: true
