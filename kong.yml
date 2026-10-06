@@ -175,8 +175,9 @@ services:
           - /api/documents
         strip_path: true
 
-  # Uploads go through here; a request-size limit matching vault-service's
-  # upload cap is added with the upload route (milestone M6).
+  # Uploads go through here. The gateway refuses a body larger than
+  # vault-service's 25 MB cap (plus room for the multipart wrapping) before it
+  # reaches the service; vault-service enforces the exact cap itself.
   - name: vault-service
     url: http://vault-service:4012/vault
 
@@ -185,3 +186,9 @@ services:
         paths:
           - /api/vault
         strip_path: true
+
+    plugins:
+      - name: request-size-limiting
+        config:
+          allowed_payload_size: 26
+          size_unit: megabytes
