@@ -113,6 +113,17 @@ services:
           - /api/profile
         strip_path: true
 
+  # First-run setup of a new installation: public (no account exists yet),
+  # guarded by a one-time code from the migrate log, closed once an admin exists.
+  - name: identity-setup
+    url: http://identity-service:4004/setup
+
+    routes:
+      - name: identity-setup-api
+        paths:
+          - /api/setup
+        strip_path: true
+
   # assistant-service hosts the AI assistant and the MCP server. The MCP route
   # is published so external MCP clients can reach it with the same JWT.
   - name: assistant-service
