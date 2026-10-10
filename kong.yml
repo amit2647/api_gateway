@@ -203,3 +203,24 @@ services:
         config:
           allowed_payload_size: 26
           size_unit: megabytes
+
+  # Ory Hydra's public API: OAuth 2.1 / OpenID Connect endpoints, discovery
+  # and the signing keys (JWKS). Paths are forwarded unchanged. Hydra's admin
+  # API (port 4445) is deliberately absent: it can create clients and accept
+  # logins, so only identity-service reaches it, on the Docker network.
+  - name: hydra-public
+    url: http://hydra:4444
+
+    routes:
+      - name: hydra-oauth2
+        paths:
+          - /oauth2/
+        strip_path: false
+      - name: hydra-well-known
+        paths:
+          - /.well-known/
+        strip_path: false
+      - name: hydra-userinfo
+        paths:
+          - /userinfo
+        strip_path: false
