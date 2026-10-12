@@ -224,3 +224,19 @@ services:
         paths:
           - /userinfo
         strip_path: false
+
+# Security headers on every response through the gateway (auth hardening P6).
+# These are API answers — JSON, redirects, downloads — never pages to render,
+# so their policy allows nothing at all; the web app's own pages carry their
+# own (frontend/security-headers.conf). `add` leaves a header a service set
+# itself untouched. Strict-Transport-Security belongs here too once the
+# gateway is behind HTTPS (see docs/production.md in the parent repo).
+plugins:
+  - name: response-transformer
+    config:
+      add:
+        headers:
+          - "Content-Security-Policy: default-src 'none'; frame-ancestors 'none'"
+          - "X-Frame-Options: DENY"
+          - "X-Content-Type-Options: nosniff"
+          - "Referrer-Policy: no-referrer"
